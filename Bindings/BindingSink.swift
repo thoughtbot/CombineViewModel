@@ -70,7 +70,7 @@ extension BindingSink: BindingSubscriber {
   {
     guard let owner = sink.owner else { return AnyCancellable({}) }
     let cancellable = AnyCancellable(sink)
-    cancellable.store(in: &owner.subscriptions)
+    owner.store(cancellable)
     publisher.subscribe(sink)
     return cancellable
   }
