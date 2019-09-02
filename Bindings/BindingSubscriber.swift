@@ -1,11 +1,6 @@
 import Combine
 
-precedencegroup BindingPrecedence {
-  higherThan: AssignmentPrecedence
-  assignment: true
-}
-
-infix operator <~: BindingPrecedence
+infix operator <~: DefaultPrecedence
 
 public protocol BindingSubscriber: Subscriber, Cancellable {
   @discardableResult
