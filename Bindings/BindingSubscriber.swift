@@ -16,3 +16,23 @@ extension Publisher {
     subscriber <~ source
   }
 }
+
+// MARK: Optional
+
+extension BindingSubscriber {
+  @discardableResult
+  public static func <~ <P: Publisher> (subscriber: Self, source: P) -> AnyCancellable
+    where Input == P.Output?, Failure == P.Failure
+  {
+    subscriber <~ source.map(Optional.some)
+  }
+}
+
+extension Publisher {
+  @discardableResult
+  public static func ~> <B: BindingSubscriber> (source: Self, subscriber: B) -> AnyCancellable
+    where B.Input == Output?, B.Failure == Failure
+  {
+    subscriber <~ source
+  }
+}
