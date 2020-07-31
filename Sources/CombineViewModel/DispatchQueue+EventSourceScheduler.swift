@@ -2,6 +2,7 @@ import Combine
 import Dispatch
 
 extension DispatchQueue: EventSourceScheduler {
+  public typealias EventSourceOptions = Never
   public typealias EventSourceType = EventSource
 
   public final class EventSource {

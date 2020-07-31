@@ -1,7 +1,7 @@
 import Combine
 
 public protocol EventSourceScheduler: Scheduler {
-  associatedtype EventSourceOptions = Never
+  associatedtype EventSourceOptions
   associatedtype EventSourceType: EventSource
 
   func scheduleEventSource(
