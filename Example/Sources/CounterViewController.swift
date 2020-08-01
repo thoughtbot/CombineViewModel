@@ -2,7 +2,7 @@ import Combine
 import CombineViewModel
 import UIKit
 
-final class ViewController: UITableViewController, ViewModelObserver {
+final class CounterViewController: UITableViewController, ViewModelObserver {
   @IBOutlet private var resetItem: UIBarButtonItem!
   @IBOutlet private var stepper: UIStepper!
   @IBOutlet private var valueLabel: UILabel!

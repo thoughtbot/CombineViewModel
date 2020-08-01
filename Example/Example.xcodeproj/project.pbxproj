@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		053B251424D516EE0081607D /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053B251324D516EE0081607D /* TasksViewController.swift */; };
+		053B251624D517320081607D /* TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053B251524D517320081607D /* TaskList.swift */; };
 		05ADD8FA24D5097F006E17EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05ADD8F924D5097F006E17EA /* AppDelegate.swift */; };
 		05ADD8FC24D5097F006E17EA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05ADD8FB24D5097F006E17EA /* SceneDelegate.swift */; };
-		05ADD8FE24D5097F006E17EA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05ADD8FD24D5097F006E17EA /* ViewController.swift */; };
+		05ADD8FE24D5097F006E17EA /* CounterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05ADD8FD24D5097F006E17EA /* CounterViewController.swift */; };
 		05ADD90124D5097F006E17EA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05ADD8FF24D5097F006E17EA /* Main.storyboard */; };
 		05ADD90324D5097F006E17EA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05ADD90224D5097F006E17EA /* Assets.xcassets */; };
 		05ADD90624D5097F006E17EA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05ADD90424D5097F006E17EA /* LaunchScreen.storyboard */; };
@@ -18,10 +20,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		053B251324D516EE0081607D /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
+		053B251524D517320081607D /* TaskList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskList.swift; sourceTree = "<group>"; };
 		05ADD8F624D5097F006E17EA /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05ADD8F924D5097F006E17EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		05ADD8FB24D5097F006E17EA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		05ADD8FD24D5097F006E17EA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		05ADD8FD24D5097F006E17EA /* CounterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterViewController.swift; sourceTree = "<group>"; };
 		05ADD90024D5097F006E17EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		05ADD90224D5097F006E17EA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		05ADD90524D5097F006E17EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -65,8 +69,10 @@
 			children = (
 				05ADD8F924D5097F006E17EA /* AppDelegate.swift */,
 				05ADD91224D509F6006E17EA /* Counter.swift */,
+				05ADD8FD24D5097F006E17EA /* CounterViewController.swift */,
 				05ADD8FB24D5097F006E17EA /* SceneDelegate.swift */,
-				05ADD8FD24D5097F006E17EA /* ViewController.swift */,
+				053B251524D517320081607D /* TaskList.swift */,
+				053B251324D516EE0081607D /* TasksViewController.swift */,
 				05ADD8FF24D5097F006E17EA /* Main.storyboard */,
 				05ADD90224D5097F006E17EA /* Assets.xcassets */,
 				05ADD90424D5097F006E17EA /* LaunchScreen.storyboard */,
@@ -163,8 +169,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				05ADD8FE24D5097F006E17EA /* ViewController.swift in Sources */,
+				053B251624D517320081607D /* TaskList.swift in Sources */,
+				05ADD8FE24D5097F006E17EA /* CounterViewController.swift in Sources */,
 				05ADD8FA24D5097F006E17EA /* AppDelegate.swift in Sources */,
+				053B251424D516EE0081607D /* TasksViewController.swift in Sources */,
 				05ADD91324D509F6006E17EA /* Counter.swift in Sources */,
 				05ADD8FC24D5097F006E17EA /* SceneDelegate.swift in Sources */,
 			);
