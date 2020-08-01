@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17140" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="FDX-IU-T3E">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mv1-rc-F57">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17115"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
+        <!--Counter-->
         <scene sceneID="2UX-PB-1gw">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FDX-IU-T3E" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Counter" image="plusminus.circle" catalog="system" id="J8B-ji-mhU"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="chb-5R-X6h">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
@@ -23,16 +23,16 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vgQ-Mw-QIB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="18.840579710144929" y="86.383928571428569"/>
+            <point key="canvasLocation" x="928.98550724637687" y="86.383928571428569"/>
         </scene>
-        <!--CombineViewModel-->
+        <!--Counter-->
         <scene sceneID="Mgu-WO-cv8">
             <objects>
                 <tableViewController id="1RU-xQ-uRW" customClass="ViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="y3d-Ph-IEz">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
                             <tableViewSection id="fIX-yj-xX5">
                                 <cells>
@@ -58,11 +58,11 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YLB-rv-yFG">
                                                     <rect key="frame" x="229" y="11" width="11" height="32.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                    <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor"/>
+                                            <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="YLB-rv-yFG" firstAttribute="top" secondItem="gV3-aR-218" secondAttribute="topMargin" id="15K-Xk-9mj"/>
                                                 <constraint firstItem="YLB-rv-yFG" firstAttribute="leading" secondItem="Fcs-wo-OeI" secondAttribute="trailing" constant="8" symbolic="YES" id="5zB-K8-eml"/>
@@ -76,7 +76,7 @@
                                                 <constraint firstAttribute="bottomMargin" secondItem="YLB-rv-yFG" secondAttribute="bottom" id="zre-Om-ZOZ"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor"/>
+                                        <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -86,7 +86,7 @@
                             <outlet property="delegate" destination="1RU-xQ-uRW" id="kdk-Ew-kjA"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="CombineViewModel" id="5HG-NE-XYi">
+                    <navigationItem key="navigationItem" title="Counter" id="5HG-NE-XYi">
                         <barButtonItem key="rightBarButtonItem" title="Reset" image="arrow.counterclockwise.circle" catalog="system" id="pQA-4M-gSd">
                             <connections>
                                 <action selector="reset:" destination="1RU-xQ-uRW" id="dCX-cy-HfT"/>
@@ -101,19 +101,28 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dBt-ZX-Jav" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="868" y="86"/>
+            <point key="canvasLocation" x="1776.8115942028987" y="85.714285714285708"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="dmg-OD-Jti">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="mv1-rc-F57" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="nfY-aV-gg7">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="FDX-IU-T3E" kind="relationship" relationship="viewControllers" id="Rdu-7W-crY"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FjP-3p-ZQq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="18.840579710144929" y="86.383928571428569"/>
         </scene>
     </scenes>
     <resources>
         <image name="arrow.counterclockwise.circle" catalog="system" width="128" height="121"/>
-        <systemColor name="secondaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="secondarySystemGroupedBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGroupedBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
+        <image name="plusminus.circle" catalog="system" width="128" height="121"/>
     </resources>
 </document>
