@@ -36,27 +36,27 @@
                         <sections>
                             <tableViewSection id="fIX-yj-xX5">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="54.5" id="cYc-4F-j8D">
-                                        <rect key="frame" x="20" y="18" width="374" height="54.5"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="44" id="cYc-4F-j8D">
+                                        <rect key="frame" x="20" y="18" width="374" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cYc-4F-j8D" id="gV3-aR-218">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="54.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Counter" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fcs-wo-OeI">
-                                                    <rect key="frame" x="20" y="11" width="201" height="32.5"/>
+                                                    <rect key="frame" x="20" y="11" width="201" height="22"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="xKX-Om-Fr9">
-                                                    <rect key="frame" x="260" y="11" width="94" height="32.5"/>
+                                                    <rect key="frame" x="260" y="6" width="94" height="32"/>
                                                     <connections>
                                                         <action selector="step:" destination="1RU-xQ-uRW" eventType="valueChanged" id="kbN-w7-vfv"/>
                                                     </connections>
                                                 </stepper>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YLB-rv-yFG">
-                                                    <rect key="frame" x="229" y="11" width="11" height="32.5"/>
+                                                    <rect key="frame" x="229" y="11" width="11" height="22"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -66,10 +66,9 @@
                                             <constraints>
                                                 <constraint firstItem="YLB-rv-yFG" firstAttribute="top" secondItem="gV3-aR-218" secondAttribute="topMargin" id="15K-Xk-9mj"/>
                                                 <constraint firstItem="YLB-rv-yFG" firstAttribute="leading" secondItem="Fcs-wo-OeI" secondAttribute="trailing" constant="8" symbolic="YES" id="5zB-K8-eml"/>
+                                                <constraint firstItem="xKX-Om-Fr9" firstAttribute="centerY" secondItem="gV3-aR-218" secondAttribute="centerY" id="APG-fe-aau"/>
                                                 <constraint firstItem="Fcs-wo-OeI" firstAttribute="leading" secondItem="gV3-aR-218" secondAttribute="leadingMargin" id="DZg-hH-30E"/>
-                                                <constraint firstItem="xKX-Om-Fr9" firstAttribute="top" secondItem="gV3-aR-218" secondAttribute="topMargin" id="GDi-RI-MqQ"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="Fcs-wo-OeI" secondAttribute="bottom" id="MWY-ou-ex7"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="xKX-Om-Fr9" secondAttribute="bottom" id="Oob-fg-qiF"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="xKX-Om-Fr9" secondAttribute="trailing" id="kBS-wW-Mfz"/>
                                                 <constraint firstItem="Fcs-wo-OeI" firstAttribute="top" secondItem="gV3-aR-218" secondAttribute="topMargin" id="lXI-mh-1bE"/>
                                                 <constraint firstItem="xKX-Om-Fr9" firstAttribute="leading" secondItem="YLB-rv-yFG" secondAttribute="trailing" constant="20" id="p9o-5v-7Io"/>
