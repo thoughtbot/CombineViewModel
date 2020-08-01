@@ -12,6 +12,11 @@ final class TasksViewController: UITableViewController, ViewModelObserver {
 
   var subscriptions: Set<AnyCancellable> = []
 
+  required init?(coder: NSCoder) {
+    super.init(coder: coder)
+    taskList = TaskList()
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -20,8 +25,6 @@ final class TasksViewController: UITableViewController, ViewModelObserver {
       cell.textLabel?.text = item.title
       return cell
     }
-
-    taskList = TaskList()
   }
 
   func updateView() {

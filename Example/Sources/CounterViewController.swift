@@ -11,13 +11,18 @@ final class CounterViewController: UITableViewController, ViewModelObserver {
 
   var subscriptions: Set<AnyCancellable> = []
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
+  required init?(coder: NSCoder) {
+    super.init(coder: coder)
 
     counter = Counter(
       value: UserDefaults.standard.integer(forKey: "counterValue"),
       defaultValue: 0
     )
+  }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
     stepper.maximumValue = .infinity
     stepper.minimumValue = -.infinity
   }
