@@ -1,5 +1,9 @@
 import Combine
 import Dispatch
+#if canImport(UIKit)
+import CombineViewModelObjC
+import UIKit
+#endif
 
 @propertyWrapper
 public struct ViewModel<Object: ObservableObject> {
@@ -28,10 +32,36 @@ public struct ViewModel<Object: ObservableObject> {
 
       observer[keyPath: storageKeyPath].object = newValue
 
-      newValue.observe(on: DispatchQueue.main).sink { [weak observer] _ in
-        guard let observer = observer, observer.isReadyForUpdates else { return }
-        observer.updateView()
-      }.store(in: &observer.subscriptions)
+      var observations: AnyPublisher<(Object, Observer?), Never>!
+
+      let checkObserverReady: (Object) -> (Object, Observer?) = { [weak observer] object in
+        if let observer = observer, observer.isReadyForUpdates {
+          return (object, observer)
+        } else {
+          return (object, nil)
+        }
+      }
+
+#if canImport(UIKit)
+      if let viewController = observer as? UIViewController {
+        dispatchPrecondition(condition: .onQueue(.main))
+        _combinevm_hook_viewDidLoad(viewController)
+
+        observations = newValue.observe(on: DispatchQueue.main)
+          .combineLatest(viewController.viewDidLoadPublisher) { object, _ in checkObserverReady(object) }
+          .eraseToAnyPublisher()
+      }
+#endif
+
+      if observations == nil {
+        observations = newValue.observe(on: DispatchQueue.main)
+          .map(checkObserverReady)
+          .eraseToAnyPublisher()
+      }
+
+      observations
+        .sink { _, observer in observer?.updateView() }
+        .store(in: &observer.subscriptions)
     }
   }
 }

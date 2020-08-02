@@ -18,14 +18,8 @@ final class TasksViewController: UITableViewController, ViewModelObserver {
 
   var subscriptions: Set<AnyCancellable> = []
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
-
-    dataSource = UITableViewDiffableDataSource(tableView: tableView) { tableView, indexPath, item in
-      let cell = tableView.dequeueReusableCell(withIdentifier: "Task", for: indexPath)
-      cell.textLabel?.text = item.title
-      return cell
-    }
+  required init?(coder: NSCoder) {
+    super.init(coder: coder)
 
     do {
       let data = try Data(contentsOf: url)
@@ -34,6 +28,16 @@ final class TasksViewController: UITableViewController, ViewModelObserver {
     } catch {
       os_log(.error, "Error loading task list: %@", "\(error)")
       taskList = TaskList()
+    }
+  }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    dataSource = UITableViewDiffableDataSource(tableView: tableView) { tableView, indexPath, item in
+      let cell = tableView.dequeueReusableCell(withIdentifier: "Task", for: indexPath)
+      cell.textLabel?.text = item.title
+      return cell
     }
   }
 

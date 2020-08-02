@@ -12,7 +12,8 @@ let package = Package(
     .library(name: "CombineViewModel", targets: ["CombineViewModel"]),
   ],
   targets: [
-    .target(name: "CombineViewModel"),
+    .target(name: "CombineViewModel", dependencies: ["CombineViewModelObjC"]),
+    .target(name: "CombineViewModelObjC"),
     .testTarget(name: "CombineViewModelTests", dependencies: ["CombineViewModel"]),
   ]
 )
