@@ -18,8 +18,14 @@ final class TasksViewController: UITableViewController, ViewModelObserver {
 
   var subscriptions: Set<AnyCancellable> = []
 
-  required init?(coder: NSCoder) {
-    super.init(coder: coder)
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    dataSource = UITableViewDiffableDataSource(tableView: tableView) { tableView, indexPath, item in
+      let cell = tableView.dequeueReusableCell(withIdentifier: "Task", for: indexPath)
+      cell.textLabel?.text = item.title
+      return cell
+    }
 
     do {
       let data = try Data(contentsOf: url)
@@ -31,23 +37,11 @@ final class TasksViewController: UITableViewController, ViewModelObserver {
     }
   }
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
-
-    dataSource = UITableViewDiffableDataSource(tableView: tableView) { tableView, indexPath, item in
-      let cell = tableView.dequeueReusableCell(withIdentifier: "Task", for: indexPath)
-      cell.textLabel?.text = item.title
-      return cell
-    }
-
-    updateView()
-  }
-
   func updateView() {
     var snapshot = NSDiffableDataSourceSnapshot<Section, Task>()
     snapshot.appendSections([.tasks])
     snapshot.appendItems(taskList.tasks)
-    dataSource.apply(snapshot)
+    dataSource.apply(snapshot, animatingDifferences: view.window != nil)
 
     do {
       let data = try encoder.encode(taskList.tasks)

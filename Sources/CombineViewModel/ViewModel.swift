@@ -1,8 +1,5 @@
 import Combine
 import Dispatch
-#if canImport(UIKit)
-import UIKit
-#endif
 
 @propertyWrapper
 public struct ViewModel<Object: ObservableObject> {
@@ -31,22 +28,10 @@ public struct ViewModel<Object: ObservableObject> {
 
       observer[keyPath: storageKeyPath].object = newValue
 
-      func startObserving() {
-        newValue.observe(on: DispatchQueue.main)
-          .sink { [weak observer] _ in observer?.updateView() }
-          .store(in: &observer.subscriptions)
-      }
-
-      if observer.isViewLoaded {
-        startObserving()
-      } else {
-#if canImport(UIKit)
-        if let viewController = observer as? UIViewController {
-          let viewDidLoadObserver = ViewDidLoadObserver(viewController: viewController, onViewDidLoad: startObserving)
-          viewDidLoadObserver.schedule(forMode: .common, in: .current)
-        }
-#endif
-      }
+      newValue.observe(on: DispatchQueue.main).sink { [weak observer] _ in
+        guard let observer = observer, observer.isReadyForUpdates else { return }
+        observer.updateView()
+      }.store(in: &observer.subscriptions)
     }
   }
 }
