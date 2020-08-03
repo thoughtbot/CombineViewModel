@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Bindings",
+        "repositoryURL": "https://github.com/thoughtbot/Bindings.git",
+        "state": {
+          "branch": null,
+          "revision": "87fc9a2ec4ec516bd5821d0c2557080db930972d",
+          "version": "0.1.2"
+        }
+      },
+      {
+        "package": "CombineExt",
+        "repositoryURL": "https://github.com/CombineCommunity/CombineExt.git",
+        "state": {
+          "branch": null,
+          "revision": "6664678135c6aec049c887a51c9da2545f184882",
+          "version": "1.2.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

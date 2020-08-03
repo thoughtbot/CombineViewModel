@@ -17,4 +17,14 @@ final class TaskList: ObservableObject {
     let task = Task(id: UUID(), title: title)
     tasks.append(task)
   }
+
+  func move<Tasks: Collection>(_ newTasks: Tasks, to index: Int) where Tasks.Element == Task {
+    let oldIDs = newTasks.reduce(into: Set()) { $0.insert($1.id) }
+    tasks.removeAll { oldIDs.contains($0.id) }
+    if index > tasks.endIndex {
+      tasks.append(contentsOf: newTasks)
+    } else {
+      tasks.insert(contentsOf: newTasks, at: index)
+    }
+  }
 }
