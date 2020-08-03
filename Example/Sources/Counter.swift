@@ -1,4 +1,4 @@
-import Combine
+import CombineViewModel
 import Foundation
 
 final class Counter: ObservableObject {

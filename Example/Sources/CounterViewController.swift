@@ -1,4 +1,3 @@
-import Combine
 import CombineViewModel
 import UIKit
 
@@ -42,4 +41,3 @@ final class CounterViewController: UITableViewController, ViewModelObserver {
     counter.value = Int(stepper.value)
   }
 }
-

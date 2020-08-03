@@ -1,4 +1,4 @@
-import Combine
+import CombineViewModel
 import Foundation
 
 struct Task: Hashable, Codable {
