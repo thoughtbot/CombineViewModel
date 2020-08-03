@@ -40,7 +40,7 @@ final class Counter: ObservableObject {
 import CombineViewModel
 import UIKit
 
-// (1) Conform to you view controller to the ViewModelObserver protocol.
+// (1) Conform your view controller to the ViewModelObserver protocol.
 //
 final class CounterViewController: UIViewController, ViewModelObserver {
   @IBOutlet private var valueLabel: UILabel!
