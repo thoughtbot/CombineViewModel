@@ -80,8 +80,9 @@ final class TasksViewController: UITableViewController, ViewModelObserver {
       textField.returnKeyType = .done
     }
 
-    let save = UIAlertAction(title: "Save", style: .default) { _ in
-      self.saveNewTask(alert.textFields!.first!)
+    let save = UIAlertAction(title: "Save", style: .default) { [weak alert] _ in
+      guard let textField = alert?.textFields?.first else { return }
+      self.saveNewTask(textField)
     }
     alert.addAction(save)
 
