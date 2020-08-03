@@ -1,11 +1,15 @@
-import Bindings
 import Combine
-import CombineExt
 import CombineViewModel
 import UIKit
 import os.log
 
 final class TasksViewController: UITableViewController, ViewModelObserver {
+  private class DataSource: UITableViewDiffableDataSource<Section, Task> {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+      true
+    }
+  }
+
   private enum Section {
     case tasks
   }
@@ -36,7 +40,7 @@ final class TasksViewController: UITableViewController, ViewModelObserver {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    dataSource = UITableViewDiffableDataSource(tableView: tableView) { tableView, indexPath, item in
+    dataSource = DataSource(tableView: tableView) { tableView, indexPath, item in
       let cell = tableView.dequeueReusableCell(withIdentifier: "Task", for: indexPath)
       cell.textLabel?.text = item.title
       return cell
@@ -47,6 +51,9 @@ final class TasksViewController: UITableViewController, ViewModelObserver {
   }
 
   func updateView() {
+    let oldTasks = dataSource.snapshot().itemIdentifiers
+    guard !taskList.tasks.difference(from: oldTasks).isEmpty else { return }
+
     var snapshot = NSDiffableDataSourceSnapshot<Section, Task>()
     snapshot.appendSections([.tasks])
     snapshot.appendItems(taskList.tasks)
@@ -89,13 +96,42 @@ final class TasksViewController: UITableViewController, ViewModelObserver {
       !text.isEmpty
       else { return }
 
-    taskList.appendNew(title: text)
+    let task = taskList.appendNew(title: text)
+    var snapshot = dataSource.snapshot()
+    snapshot.appendItems([task])
+    dataSource.apply(snapshot)
   }
 }
 
 private extension TasksViewController {
-  func moveTasks<Tasks: Collection>(to indexPath: IndexPath) -> BindingSink<TasksViewController, Tasks> where Tasks.Element == Task {
-    BindingSink(owner: self) { $0.taskList.move($1, to: indexPath.row) }
+  func move<Tasks: Collection>(_ tasks: Tasks, to indexPath: IndexPath) where Tasks.Element == Task {
+    if let moves = taskList.move(tasks, to: indexPath.row) {
+      var snapshot = dataSource.snapshot()
+      for move in moves {
+        switch move {
+        case let .append(task, after: otherTask):
+          snapshot.moveItem(task, afterItem: otherTask)
+        case let .insert(task, before: otherTask):
+          snapshot.moveItem(task, beforeItem: otherTask)
+        }
+      }
+      dataSource.apply(snapshot)
+    }
+  }
+}
+
+extension TasksViewController/*: UITableViewDelegate */ {
+  override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    let delete = UIContextualAction(style: .destructive, title: "Delete") { [taskList] _, _, completion in
+      let task = taskList.delete(at: indexPath.row)
+      var snapshot = self.dataSource.snapshot()
+      snapshot.deleteItems([task])
+      self.dataSource.apply(snapshot, animatingDifferences: true)
+      completion(true)
+    }
+    let configuration = UISwipeActionsConfiguration(actions: [delete])
+    configuration.performsFirstActionWithFullSwipe = true
+    return configuration
   }
 }
 
@@ -114,17 +150,9 @@ extension TasksViewController: UITableViewDragDelegate {
 
   private func taskDragItem(at indexPath: IndexPath) -> UIDragItem {
     let task = taskList.tasks[indexPath.row]
-    let provider = NSItemProvider()
-    provider.registerDataRepresentation(forTypeIdentifier: "\(Bundle.main.bundleIdentifier!).task", visibility: .ownProcess) { completion -> Progress? in
-      do {
-        let data = try self.encoder.encode(task)
-        completion(data, nil)
-      } catch {
-        completion(nil, error)
-      }
-      return nil
-    }
-    return UIDragItem(itemProvider: provider)
+    let item = UIDragItem(itemProvider: NSItemProvider())
+    item.localObject = task
+    return item
   }
 }
 
@@ -145,15 +173,8 @@ extension TasksViewController: UITableViewDropDelegate {
 
   func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
     guard let indexPath = coordinator.destinationIndexPath else { return }
-
-    moveTasks(to: indexPath) <~ coordinator.session.items
-      .map { item in
-        item.itemProvider
-          .dataRepresentationPublisher(forTypeIdentifier: "\(Bundle.main.bundleIdentifier!).task")
-          .decode(type: Task.self, decoder: decoder)
-      }
-      .zip()
-      .logError("Failed to drop task item")
-      .receive(on: DispatchQueue.main)
+    let items = coordinator.session.items
+    let tasks = items.map { $0.localObject as! Task }
+    move(tasks, to: indexPath)
   }
 }

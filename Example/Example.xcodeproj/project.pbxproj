@@ -10,8 +10,6 @@
 		053B251424D516EE0081607D /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053B251324D516EE0081607D /* TasksViewController.swift */; };
 		053B251624D517320081607D /* TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053B251524D517320081607D /* TaskList.swift */; };
 		0559CB5D24D51DD200E6FD23 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0559CB5C24D51DD200E6FD23 /* TabBarController.swift */; };
-		05937E9624D793B0005B5266 /* Bindings in Frameworks */ = {isa = PBXBuildFile; productRef = 05937E9524D793B0005B5266 /* Bindings */; };
-		05937E9924D7995D005B5266 /* CombineExt in Frameworks */ = {isa = PBXBuildFile; productRef = 05937E9824D7995D005B5266 /* CombineExt */; };
 		05937E9B24D79D16005B5266 /* NSItemProvider+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05937E9A24D79D16005B5266 /* NSItemProvider+Combine.swift */; };
 		05937E9D24D79DB7005B5266 /* CombineAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05937E9C24D79DB7005B5266 /* CombineAdditions.swift */; };
 		05ADD8FA24D5097F006E17EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05ADD8F924D5097F006E17EA /* AppDelegate.swift */; };
@@ -47,8 +45,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				05937E9624D793B0005B5266 /* Bindings in Frameworks */,
-				05937E9924D7995D005B5266 /* CombineExt in Frameworks */,
 				05ADD91124D509BC006E17EA /* CombineViewModel in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -127,8 +123,6 @@
 			name = Example;
 			packageProductDependencies = (
 				05ADD91024D509BC006E17EA /* CombineViewModel */,
-				05937E9524D793B0005B5266 /* Bindings */,
-				05937E9824D7995D005B5266 /* CombineExt */,
 			);
 			productName = Example;
 			productReference = 05ADD8F624D5097F006E17EA /* Example.app */;
@@ -158,8 +152,6 @@
 			);
 			mainGroup = 05ADD8ED24D5097F006E17EA;
 			packageReferences = (
-				05937E9424D793B0005B5266 /* XCRemoteSwiftPackageReference "Bindings" */,
-				05937E9724D7995D005B5266 /* XCRemoteSwiftPackageReference "CombineExt" */,
 			);
 			productRefGroup = 05ADD8F724D5097F006E17EA /* Products */;
 			projectDirPath = "";
@@ -397,36 +389,7 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		05937E9424D793B0005B5266 /* XCRemoteSwiftPackageReference "Bindings" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/thoughtbot/Bindings.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.2;
-			};
-		};
-		05937E9724D7995D005B5266 /* XCRemoteSwiftPackageReference "CombineExt" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/CombineCommunity/CombineExt.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		05937E9524D793B0005B5266 /* Bindings */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 05937E9424D793B0005B5266 /* XCRemoteSwiftPackageReference "Bindings" */;
-			productName = Bindings;
-		};
-		05937E9824D7995D005B5266 /* CombineExt */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 05937E9724D7995D005B5266 /* XCRemoteSwiftPackageReference "CombineExt" */;
-			productName = CombineExt;
-		};
 		05ADD91024D509BC006E17EA /* CombineViewModel */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CombineViewModel;
