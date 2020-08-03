@@ -14,6 +14,6 @@ let package = Package(
   targets: [
     .target(name: "CombineViewModel", dependencies: ["CombineViewModelObjC"]),
     .target(name: "CombineViewModelObjC"),
-    .testTarget(name: "CombineViewModelTests", dependencies: ["CombineViewModel"]),
+    .testTarget(name: "CombineViewModelTests", dependencies: ["CombineViewModel", "CombineViewModelObjC"]),
   ]
 )

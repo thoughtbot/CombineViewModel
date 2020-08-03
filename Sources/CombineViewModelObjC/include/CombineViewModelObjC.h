@@ -10,6 +10,7 @@
 @class UIViewController;
 
 FOUNDATION_EXPORT NSNotificationName CombineViewModelViewDidLoad NS_SWIFT_NAME(UIViewController.viewDidLoadNotification);
+FOUNDATION_EXPORT void *CombineViewModelIsHookedKey;
 
 void _combinevm_hook_viewDidLoad(id object);
 #endif // COMBINEVM_HAS_FOUNDATION
