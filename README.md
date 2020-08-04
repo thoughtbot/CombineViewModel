@@ -53,6 +53,7 @@ final class CounterViewController: UIViewController, ViewModelObserver {
   // (3) Initialize your view model in init().
   //
   required init?(coder: NSCoder) {
+    super.init(coder: coder)
     self.counter = Counter()
   }
 
