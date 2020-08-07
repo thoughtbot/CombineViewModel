@@ -51,6 +51,10 @@ _combinevm_object_getInstanceMethod(id object, SEL selector, Class *actual_class
         break;
       }
     }
+
+    if (klass == _UIViewController) {
+      *stop = YES;
+    }
   });
 
   if (actual_class != nil) {
