@@ -25,53 +25,74 @@ public struct ObjectDidChangePublisher<Object: ObservableObject, Context: EventS
 private extension ObjectDidChangePublisher {
   final class Subscription<S: Subscriber> where S.Input == Output, S.Failure == Failure {
     private weak var object: Object?
-    private var demand: Subscribers.Demand = .none
-    private var subscriber: S?
-    private var subscription: AnyCancellable?
+
+    @UnfairAtomic private var state: (
+      demand: Subscribers.Demand,
+      subscriber: S?,
+      subscription: AnyCancellable?
+    )
 
     init(object: Object, scheduler: Context, subscriber: S) {
-      self.object = object
-      self.subscriber = subscriber
+      weak var weakSelf: Subscription?
 
-      let source = scheduler.scheduleEventSource { [weak self] _ in
-        self?.serviceDemand()
+      let source = scheduler.scheduleEventSource { _ in
+        weakSelf?.serviceDemand()
       }
 
-      self.subscription = object.objectWillChange.sink(
-        receiveCompletion: { [weak self] _ in self?.finish() },
+      let subscription = object.objectWillChange.sink(
+        receiveCompletion: { _ in weakSelf?.finish() },
         receiveValue: { _ in source.signal() }
       )
+
+      self.object = object
+      self._state = UnfairAtomic((.none, subscriber, subscription))
+      weakSelf = self
     }
 
     func finish() {
-      subscriber?.receive(completion: .finished)
-      cancel()
+      if case let (_, subscriber?, _) = $state.swap((.none, nil, nil)) {
+        subscriber.receive(completion: .finished)
+      }
     }
 
     func serviceDemand() {
-      guard let subscriber = subscriber, let object = object else {
-        cancel()
-        return
+      let message = $state.modify { state -> (S, Object)? in
+        guard let subscriber = state.subscriber, let object = object else {
+          state.subscriber = nil
+          state.subscription = nil
+          return nil
+        }
+
+        guard state.demand > 0 else { return nil }
+        state.demand -= 1
+        return (subscriber, object)
       }
 
-      guard demand > 0 else { return }
-      self.demand -= 1
-      self.demand += subscriber.receive(object)
+      guard let (subscriber, object) = message else { return }
+
+      let newDemand = subscriber.receive(object)
+
+      if newDemand > 0 {
+        $state.modify { state in
+          if state.subscriber != nil {
+            state.demand += newDemand
+          }
+        }
+      }
     }
   }
 }
 
 extension ObjectDidChangePublisher.Subscription: Cancellable {
   func cancel() {
-    subscriber = nil
-    subscription = nil
+    state = (.none, nil, nil)
   }
 }
 
 extension ObjectDidChangePublisher.Subscription: Subscription {
   func request(_ demand: Subscribers.Demand) {
     assert(demand > 0, "Demand must be positive")
-    self.demand += demand
+    state.demand += demand
     serviceDemand()
   }
 }
