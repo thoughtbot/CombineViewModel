@@ -53,4 +53,23 @@ final class ObjectDidChangePublisherTests: XCTestCase {
     wait(for: [finished], timeout: 0.001)
     subscription.cancel()
   }
+
+  func testObjectDidChangePublisherThreadSafety() {
+    let viewModel = ViewModel()
+
+    let subscription = viewModel
+      .observe(on: DispatchQueue.global())
+      .map(\.counter)
+      .sink(receiveValue: { _ in })
+
+    DispatchQueue.concurrentPerform(iterations: 1000) { i in
+      if Int.random(in: 1...10) == 10 {
+        subscription.cancel()
+      } else {
+        viewModel.counter += 1
+      }
+    }
+
+    subscription.cancel()
+  }
 }

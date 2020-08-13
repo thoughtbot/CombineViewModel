@@ -12,6 +12,10 @@ struct UnfairAtomic<Value> {
 
   private let buffer: Buffer
 
+  init(_ wrappedValue: Value) {
+    self.init(wrappedValue: wrappedValue)
+  }
+
   init(wrappedValue: Value) {
     self.buffer = Buffer.create(minimumCapacity: 1) { buffer in
       buffer.withUnsafeMutablePointerToElements { $0.initialize(to: wrappedValue) }
@@ -24,11 +28,37 @@ struct UnfairAtomic<Value> {
   }
 
   var wrappedValue: Value {
-    buffer.withUnsafeMutablePointers { lock, value in
-      os_unfair_lock_lock(lock)
-      defer { os_unfair_lock_unlock(lock) }
-      return value.pointee
+    get {
+      buffer.withUnsafeMutablePointers { lock, value in
+        os_unfair_lock_lock(lock)
+        defer { os_unfair_lock_unlock(lock) }
+        return value.pointee
+      }
     }
+    nonmutating set {
+      buffer.withUnsafeMutablePointers { lock, value in
+        os_unfair_lock_lock(lock)
+        value.pointee = newValue
+        os_unfair_lock_unlock(lock)
+      }
+    }
+    nonmutating _modify {
+      var temporaryValue = buffer.withUnsafeMutablePointers { lock, value -> Value in
+        os_unfair_lock_lock(lock)
+        return value.move()
+      }
+      defer {
+        buffer.withUnsafeMutablePointers { lock, value in
+          value.initialize(to: temporaryValue)
+          os_unfair_lock_unlock(lock)
+        }
+      }
+      yield &temporaryValue
+    }
+  }
+
+  func modify<Result>(_ body: (inout Value) throws -> Result) rethrows -> Result {
+    try body(&wrappedValue)
   }
 
   func swap(_ newValue: Value) -> Value {
