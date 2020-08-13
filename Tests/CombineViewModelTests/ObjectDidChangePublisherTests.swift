@@ -6,6 +6,14 @@ private final class ViewModel: ObservableObject {
   @Published var counter = 0
 }
 
+private final class CustomPublisherViewModel: ObservableObject {
+  let objectWillChange = PassthroughSubject<Void, Never>()
+
+  func finish() {
+    objectWillChange.send(completion: .finished)
+  }
+}
+
 final class ObjectDidChangePublisherTests: XCTestCase {
   private var subscriptions: Set<AnyCancellable> = []
 
@@ -28,5 +36,21 @@ final class ObjectDidChangePublisherTests: XCTestCase {
     }
     CFRunLoopRunInMode(.defaultMode, 0, false)
     XCTAssertEqual(counterObservations, [0, 10])
+  }
+
+  func testObjectWillChangeCompletion() {
+    let finished = expectation(description: "ObjectDidChangePublisher received finished")
+    let viewModel = CustomPublisherViewModel()
+
+    let subscription = viewModel.observe(on: DispatchQueue.main)
+      .handleEvents(
+        receiveCompletion: { _ in finished.fulfill() },
+        receiveCancel: { XCTFail("Received cancel after completion") }
+      )
+      .sink { _ in }
+    viewModel.finish()
+
+    wait(for: [finished], timeout: 0.001)
+    subscription.cancel()
   }
 }

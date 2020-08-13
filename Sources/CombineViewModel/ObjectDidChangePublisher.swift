@@ -38,9 +38,14 @@ private extension ObjectDidChangePublisher {
       }
 
       self.subscription = object.objectWillChange.sink(
-        receiveCompletion: { [weak self] _ in self?.cancel() },
+        receiveCompletion: { [weak self] _ in self?.finish() },
         receiveValue: { _ in source.signal() }
       )
+    }
+
+    func finish() {
+      subscriber?.receive(completion: .finished)
+      cancel()
     }
 
     func serviceDemand() {
