@@ -16,7 +16,7 @@ let package = Package(
     .library(name: "UIKitBindings", targets: ["UIKitBindings"]),
   ],
   targets: [
-    .target(name: "CombineViewModel"),
+    .target(name: "CombineViewModel", dependencies: ["Bindings"]),
     .target(name: "Bindings"),
     .target(name: "UIKitBindings", dependencies: ["Bindings"]),
 

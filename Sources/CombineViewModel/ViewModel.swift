@@ -1,3 +1,4 @@
+import Bindings
 import Combine
 import Dispatch
 #if canImport(UIKit)
@@ -50,9 +51,7 @@ public struct ViewModel<Object: ObservableObject> {
           .eraseToAnyPublisher()
       }
 
-      objectDidChange
-        .sink { [weak observer] in observer?.updateView() }
-        .store(in: &observer.subscriptions)
+      observer.reactive._updateView <~ objectDidChange
     }
   }
 }

@@ -8,8 +8,6 @@ final class CounterViewController: UITableViewController, ViewModelObserver {
 
   @ViewModel private var counter: Counter
 
-  var subscriptions: Set<AnyCancellable> = []
-
   required init?(coder: NSCoder) {
     super.init(coder: coder)
 

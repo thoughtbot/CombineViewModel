@@ -41,17 +41,13 @@ import CombineViewModel
 import UIKit
 
 // (1) Conform your view controller to the ViewModelObserver protocol.
-//
 final class CounterViewController: UIViewController, ViewModelObserver {
   @IBOutlet private var valueLabel: UILabel!
 
   // (2) Declare your view model using the `@ViewModel` property wrapper.
-  //
   @ViewModel private var counter: Counter
-  var subscriptions: Set<AnyCancellable> = []
 
   // (3) Initialize your view model in init().
-  //
   required init?(coder: NSCoder) {
     super.init(coder: coder)
     self.counter = Counter()
@@ -59,7 +55,6 @@ final class CounterViewController: UIViewController, ViewModelObserver {
 
   // (4) The `updateView()` method is automatically called on the main queue
   //     when the view model changes. It is always called after `viewDidLoad()`.
-  //
   func updateView() {
     valueLabel.text = counter.formattedValue
   }
