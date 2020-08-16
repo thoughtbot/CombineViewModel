@@ -32,35 +32,27 @@ public struct ViewModel<Object: ObservableObject> {
 
       observer[keyPath: storageKeyPath].object = newValue
 
-      var observations: AnyPublisher<(Object, Observer?), Never>!
-
-      let checkObserverReady: (Object) -> (Object, Observer?) = { [weak observer] object in
-        if let observer = observer, observer.isReadyForUpdates {
-          return (object, observer)
-        } else {
-          return (object, nil)
-        }
-      }
+      var objectDidChange: AnyPublisher<(), Never>!
 
 #if canImport(UIKit)
       if let viewController = observer as? UIViewController {
         dispatchPrecondition(condition: .onQueue(.main))
         _combinevm_hook_viewDidLoad(viewController)
 
-        observations = newValue.observe(on: DispatchQueue.main)
-          .combineLatest(viewController.viewDidLoadPublisher) { object, _ in checkObserverReady(object) }
+        objectDidChange = newValue.observe(on: DispatchQueue.main)
+          .combineLatest(viewController.viewDidLoadPublisher) { _, _ in }
           .eraseToAnyPublisher()
       }
 #endif
 
-      if observations == nil {
-        observations = newValue.observe(on: DispatchQueue.main)
-          .map(checkObserverReady)
+      if objectDidChange == nil {
+        objectDidChange = newValue.observe(on: DispatchQueue.main)
+          .map { _ in }
           .eraseToAnyPublisher()
       }
 
-      observations
-        .sink { _, observer in observer?.updateView() }
+      objectDidChange
+        .sink { [weak observer] in observer?.updateView() }
         .store(in: &observer.subscriptions)
     }
   }
