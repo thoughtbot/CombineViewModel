@@ -1,7 +1,6 @@
 import Combine
 import Dispatch
 #if canImport(UIKit)
-import CombineViewModelObjC
 import UIKit
 #endif
 
@@ -37,7 +36,7 @@ public struct ViewModel<Object: ObservableObject> {
 #if canImport(UIKit)
       if let viewController = observer as? UIViewController {
         dispatchPrecondition(condition: .onQueue(.main))
-        _combinevm_hook_viewDidLoad(viewController)
+        viewController.hookViewDidLoad()
 
         objectDidChange = newValue.observe(on: DispatchQueue.main)
           .combineLatest(viewController.viewDidLoadPublisher) { _, _ in }

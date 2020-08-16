@@ -1,6 +1,5 @@
 #if canImport(UIKit)
 import Combine
-import CombineViewModelObjC
 import UIKit
 
 extension UIViewController {

@@ -1,5 +1,4 @@
-import Combine
-import CombineViewModel
+@testable import CombineViewModel
 import XCTest
 
 private final class TestViewModel: ObservableObject {

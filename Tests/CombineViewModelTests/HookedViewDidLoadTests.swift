@@ -1,6 +1,6 @@
 #if canImport(UIKit)
-import CombineViewModelObjC
-import ObjectiveC.runtime
+@testable import CombineViewModel
+import ObjCTestSupport
 import UIKit
 import XCTest
 
@@ -13,9 +13,8 @@ final class HookedViewDidLoadTests: XCTestCase {
     }
 
     let object = ViewController()
-    _combinevm_hook_viewDidLoad(object)
-    let isHooked = objc_getAssociatedObject(ViewController.self, CombineViewModelIsHookedKey) as? Bool == true
-    XCTAssertTrue(isHooked)
+    object.hookViewDidLoad()
+    XCTAssertTrue(combinevm_isHooked(ViewController.self))
   }
 
   func testItHooksBaseClassViewDidLoad() {
@@ -28,11 +27,18 @@ final class HookedViewDidLoadTests: XCTestCase {
     class Sub: Base {}
 
     let object = Sub()
-    _combinevm_hook_viewDidLoad(object)
-    let isBaseHooked = objc_getAssociatedObject(Base.self, CombineViewModelIsHookedKey) as? Bool == true
-    let isSubHooked = objc_getAssociatedObject(Sub.self, CombineViewModelIsHookedKey) as? Bool == true
-    XCTAssertTrue(isBaseHooked)
-    XCTAssertFalse(isSubHooked)
+    object.hookViewDidLoad()
+    XCTAssertTrue(combinevm_isHooked(Base.self), "Expected base class to be hooked")
+    XCTAssertFalse(combinevm_isHooked(Sub.self), "Expected sub class not to be hooked")
+  }
+
+  func testViewDidLoadSelector() {
+    let controller = TestObjCViewController()
+    controller.hookViewDidLoad()
+
+    _ = controller.view
+
+    XCTAssertEqual(controller.viewDidLoadSelector, #selector(UIViewController.viewDidLoad))
   }
 }
 #endif
