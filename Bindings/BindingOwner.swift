@@ -4,7 +4,7 @@ import Foundation
 private var bindingOwnerSubscriptionsKey: UInt8 = 0
 
 public protocol BindingOwner: AnyObject, ReactiveExtensionProvider {
-  associatedtype Subscriptions: Collection & ExpressibleByArrayLiteral = [AnyCancellable]
+  associatedtype Subscriptions: Collection & ExpressibleByArrayLiteral = Set<AnyCancellable>
     where Subscriptions.Element == AnyCancellable
 
   var subscriptions: Subscriptions { get set }
