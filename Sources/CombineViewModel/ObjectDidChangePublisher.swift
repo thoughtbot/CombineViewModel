@@ -56,27 +56,25 @@ private extension ObjectDidChangePublisher {
     }
 
     func serviceDemand() {
-      let message = $state.modify { state -> (S, Object)? in
-        guard let subscriber = state.subscriber, let object = object else {
-          state.subscriber = nil
-          state.subscription = nil
+      guard let output = object else {
+        finish()
+        return
+      }
+
+      let subscriber = $state.withLock { state -> S? in
+        guard let subscriber = state.subscriber, state.demand > 0 else {
           return nil
         }
 
-        guard state.demand > 0 else { return nil }
         state.demand -= 1
-        return (subscriber, object)
+        return subscriber
       }
 
-      guard let (subscriber, object) = message else { return }
+      if let subscriber = subscriber {
+        let newDemand = subscriber.receive(output)
 
-      let newDemand = subscriber.receive(object)
-
-      if newDemand > 0 {
-        $state.modify { state in
-          if state.subscriber != nil {
-            state.demand += newDemand
-          }
+        if newDemand > 0 {
+          state.demand += newDemand
         }
       }
     }
