@@ -57,7 +57,7 @@ struct UnfairAtomic<Value> {
     }
   }
 
-  func modify<Result>(_ body: (inout Value) throws -> Result) rethrows -> Result {
+  func withLock<Result>(_ body: (inout Value) throws -> Result) rethrows -> Result {
     try body(&wrappedValue)
   }
 

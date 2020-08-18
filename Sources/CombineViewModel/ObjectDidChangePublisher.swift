@@ -56,7 +56,7 @@ private extension ObjectDidChangePublisher {
     }
 
     func serviceDemand() {
-      let message = $state.modify { state -> (S, Object)? in
+      let message = $state.withLock { state -> (S, Object)? in
         guard let subscriber = state.subscriber, let object = object else {
           state.subscriber = nil
           state.subscription = nil
@@ -73,7 +73,7 @@ private extension ObjectDidChangePublisher {
       let newDemand = subscriber.receive(object)
 
       if newDemand > 0 {
-        $state.modify { state in
+        $state.withLock { state in
           if state.subscriber != nil {
             state.demand += newDemand
           }
