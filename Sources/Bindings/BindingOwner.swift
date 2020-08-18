@@ -8,7 +8,7 @@ public protocol BindingOwner: AnyObject, ReactiveExtensionProvider {
     where Subscriptions.Element == AnyCancellable
 
   var subscriptions: Subscriptions { get set }
-  func store(_ subcription: AnyCancellable)
+  func store<C: Cancellable>(_ subcription: C)
 }
 
 extension NSObject: BindingOwner {}
@@ -22,7 +22,7 @@ extension BindingOwner where Subscriptions: RangeReplaceableCollection {
   }
 
   @inlinable
-  public func store(_ subscription: AnyCancellable) {
+  public func store<C: Cancellable>(_ subscription: C) {
     subscription.store(in: &subscriptions)
   }
 }
@@ -36,7 +36,7 @@ extension BindingOwner where Subscriptions == Set<AnyCancellable> {
   }
 
   @inlinable
-  public func store(_ subscription: AnyCancellable) {
+  public func store<C: Cancellable>(_ subscription: C) {
     subscription.store(in: &subscriptions)
   }
 }
