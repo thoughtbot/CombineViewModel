@@ -34,7 +34,7 @@ public struct ViewModel<Object: ObservableObject> {
 
       var objectDidChange: AnyPublisher<(), Never>!
 
-#if canImport(UIKit)
+#if canImport(UIKit) && !os(watchOS)
       if let viewController = observer as? UIViewController {
         dispatchPrecondition(condition: .onQueue(.main))
         viewController.hookViewDidLoad()
@@ -43,7 +43,7 @@ public struct ViewModel<Object: ObservableObject> {
           .combineLatest(viewController.viewDidLoadPublisher) { _, _ in }
           .eraseToAnyPublisher()
       }
-#endif
+#endif // canImport(UIKit) && !os(watchOS)
 
       if objectDidChange == nil {
         objectDidChange = newValue.observe(on: DispatchQueue.main)

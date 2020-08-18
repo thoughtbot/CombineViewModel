@@ -1,4 +1,4 @@
-#if canImport(UIKit)
+#if canImport(UIKit) && !os(watchOS)
 import Combine
 import UIKit
 
@@ -15,4 +15,4 @@ extension UIViewController {
     }
   }
 }
-#endif
+#endif // canImport(UIKit) && !os(watchOS)

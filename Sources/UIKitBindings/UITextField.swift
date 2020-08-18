@@ -1,3 +1,4 @@
+#if canImport(UIKit) && !os(watchOS)
 import Bindings
 import UIKit
 
@@ -18,3 +19,4 @@ extension Reactive where Base: UITextField {
     BindingSink(owner: base) { $0.attributedPlaceholder = $1 }
   }
 }
+#endif // canImport(UIKit) && !os(watchOS)
