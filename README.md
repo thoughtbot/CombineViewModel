@@ -2,6 +2,10 @@
 
 An implementation of the Model-View-ViewModel (MVVM) pattern using Combine.
 
+- [Example](#example)
+- [Contributing](#contributing)
+- [About](#about)
+
 ## Example
 
 ### Step 1: A view model is class that conforms to `ObservableObject`
