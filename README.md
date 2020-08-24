@@ -3,6 +3,7 @@
 An implementation of the Model-View-ViewModel (MVVM) pattern using Combine.
 
 - [Example](#example)
+- [Bindings](#bindings)
 - [Contributing](#contributing)
 - [About](#about)
 
@@ -72,6 +73,20 @@ final class CounterViewController: UIViewController, ViewModelObserver {
   }
 }
 ```
+
+## Bindings
+
+CombineViewModel also provides the complementary [`Bindings`](/Sources/Bindings)
+module. It provides two operators — `<~`, the **input binding operator**, and
+`~>`, the **output binding operator** — along with various types and protocols
+that support it. Note that the concept of a "binding" provided by the Bindings
+module is different to [SwiftUI's `Binding` type][Binding].
+
+  [Binding]: https://developer.apple.com/documentation/swiftui/binding
+
+Platform-specific binding helpers are also provided:
+
+- [UIKitBindings](/Sources/UIKitBindings)
 
 ## Contributing
 
