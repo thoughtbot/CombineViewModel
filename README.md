@@ -2,12 +2,13 @@
 
 An implementation of the Model-View-ViewModel (MVVM) pattern using Combine.
 
-- [Example](#example)
+- [Getting Started](#getting-started)
+- [Installation](#installation)
 - [Bindings](#bindings)
 - [Contributing](#contributing)
 - [About](#about)
 
-## Example
+## Getting Started
 
 ### Step 1: A view model is class that conforms to `ObservableObject`
 
@@ -73,6 +74,14 @@ final class CounterViewController: UIViewController, ViewModelObserver {
   }
 }
 ```
+
+## Installation
+
+CombineViewModel is distributed via Swift Package Manager. To add it to your
+Xcode project, navigate to File > Add Package Dependency…, paste in the
+repository URL, and follow the prompts.
+
+<img alt="Screen capture of Xcode on macOS Big Sur, with the Add Package Dependency menu item highlighted" width="945" src="/Documentation/Images/add-package-dependency.png">
 
 ## Bindings
 
