@@ -7,13 +7,20 @@ let package = Package(
   platforms: [
     .iOS(.v13),
     .macOS(.v10_15),
+    .tvOS(.v13),
+    .watchOS(.v6),
   ],
   products: [
     .library(name: "CombineViewModel", targets: ["CombineViewModel"]),
+    .library(name: "Bindings", targets: ["Bindings"]),
+    .library(name: "UIKitBindings", targets: ["UIKitBindings"]),
   ],
   targets: [
-    .target(name: "CombineViewModel"),
-    .target(name: "ObjCTestSupport", path: "Tests/ObjCTestSupport"),
+    .target(name: "CombineViewModel", dependencies: ["Bindings"]),
+    .target(name: "Bindings"),
+    .target(name: "UIKitBindings", dependencies: ["Bindings"]),
+
     .testTarget(name: "CombineViewModelTests", dependencies: ["CombineViewModel", "ObjCTestSupport"]),
+    .target(name: "ObjCTestSupport", path: "Tests/ObjCTestSupport"),
   ]
 )

@@ -21,8 +21,6 @@ final class TasksViewController: UITableViewController, ViewModelObserver {
     .appendingPathComponent("tasks.json", isDirectory: false)
   @ViewModel private var taskList: TaskList
 
-  var subscriptions: Set<AnyCancellable> = []
-
   required init?(coder: NSCoder) {
     super.init(coder: coder)
 

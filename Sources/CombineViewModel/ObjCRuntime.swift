@@ -16,7 +16,7 @@ private func combinevm_setIsHooked(_ object: Any, _ isHooked: Bool) {
   objc_setAssociatedObject(object, &_isHookedKey, isHooked, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
 }
 
-#if canImport(UIKit)
+#if canImport(UIKit) && !os(watchOS)
 import class UIKit.UIViewController
 
 extension UIViewController {
@@ -43,7 +43,7 @@ extension UIViewController {
     combinevm_setIsHooked(`class`, true)
   }
 }
-#endif
+#endif // canImport(UIKit) && !os(watchOS)
 
 private func object_getInstanceMethod(_ object: Any, name: Selector) -> (method: Method, class: AnyClass)? {
   guard var hierarchy = ClassHierarchy(object: object)?.makeIterator() else { return nil }

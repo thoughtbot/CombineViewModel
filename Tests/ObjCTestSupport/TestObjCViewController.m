@@ -1,6 +1,6 @@
 #import "ObjCTestSupport.h"
 
-#ifdef COMBINEVM_HAS_UIKIT
+#if COMBINEVM_HAS_UIKIT && COMBINEVM_HAS_UIVIEWCONROLLER
 
 @implementation TestObjCViewController
 
@@ -12,4 +12,4 @@
 
 @end
 
-#endif // COMBINEVM_HAS_UIKIT
+#endif // COMBINEVM_HAS_UIKIT && COMBINEVM_HAS_UIVIEWCONROLLER

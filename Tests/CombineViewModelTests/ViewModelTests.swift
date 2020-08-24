@@ -7,7 +7,6 @@ private final class TestViewModel: ObservableObject {
 
 private final class Controller: ViewModelObserver {
   var observations: [Int] = []
-  var subscriptions: Set<AnyCancellable> = []
   @ViewModel var viewModel: TestViewModel
 
   init() {
@@ -37,7 +36,6 @@ import UIKit
 private final class TestViewController: UIViewController, ViewModelObserver {
   @ViewModel var viewModel: TestViewModel
   var observations: [Int] = []
-  var subscriptions: Set<AnyCancellable> = []
 
   init() {
     super.init(nibName: nil, bundle: nil)
