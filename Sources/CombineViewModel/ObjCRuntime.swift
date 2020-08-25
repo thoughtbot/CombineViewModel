@@ -26,9 +26,9 @@ extension UIViewController {
     guard !combinevm_isHooked(type(of: self)) else { return }
 
     var originalIMP: IMP!
-    let `class`: AnyClass
+    let `class`: Any
     let method: Method
-    let selector = #selector(self.viewDidLoad)
+    let selector = #selector(viewDidLoad)
 
     (method, `class`) = object_getInstanceMethod(self, name: selector)!
 
