@@ -64,11 +64,10 @@ struct UnfairAtomic<Value> {
   func swap(_ newValue: Value) -> Value {
     buffer.withUnsafeMutablePointers { lock, value in
       os_unfair_lock_lock(lock)
-      defer {
-        value.pointee = newValue
-        os_unfair_lock_unlock(lock)
-      }
-      return value.pointee
+      let oldValue = value.move()
+      value.initialize(to: newValue)
+      os_unfair_lock_unlock(lock)
+      return oldValue
     }
   }
 }
