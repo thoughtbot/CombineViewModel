@@ -22,3 +22,28 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build
         run: swift build -c release -v
+
+  build-ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build
+        run: |
+          xcodebuild build-for-testing \
+            -scheme CombineViewModel-Package \
+            -destination 'platform=iOS Simulator,name=iPhone 11'
+      - name: Run tests
+        run: |
+          xcodebuild test-without-building \
+            -scheme CombineViewModel-Package \
+            -destination 'platform=iOS Simulator,name=iPhone 11'
+
+  build-release-ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build
+        run: |
+          xcodebuild -configuration Release \
+            -scheme CombineViewModel-Package \
+            -destination 'platform=iOS Simulator,name=iPhone 11'
