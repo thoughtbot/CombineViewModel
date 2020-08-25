@@ -120,7 +120,7 @@ under the terms specified in the [LICENSE][] file.
 
 ![thoughtbot](http://presskit.thoughtbot.com/images/thoughtbot-logo-for-readmes.svg)
 
-Bindings is maintained and funded by thoughtbot, inc.
+CombineViewModel is maintained and funded by thoughtbot, inc.
 The names and logos for thoughtbot are trademarks of thoughtbot, inc.
 
 We love open source software!
