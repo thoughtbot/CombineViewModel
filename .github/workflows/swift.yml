@@ -42,8 +42,18 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build
+      - name: Build Bindings
         run: |
           xcodebuild -configuration Release \
-            -scheme CombineViewModel-Package \
+            -scheme Bindings \
+            -destination 'platform=iOS Simulator,name=iPhone 11'
+      - name: Build UIKitBindings
+        run: |
+          xcodebuild -configuration Release \
+            -scheme UIKitBindings \
+            -destination 'platform=iOS Simulator,name=iPhone 11'
+      - name: Build CombineViewModel
+        run: |
+          xcodebuild -configuration Release \
+            -scheme CombineViewModel \
             -destination 'platform=iOS Simulator,name=iPhone 11'
