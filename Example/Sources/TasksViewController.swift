@@ -96,6 +96,9 @@ final class TasksViewController: UITableViewController, ViewModelObserver {
 
     let task = taskList.appendNew(title: text)
     var snapshot = dataSource.snapshot()
+    if snapshot.sectionIdentifiers.isEmpty {
+      snapshot.appendSections([.tasks])
+    }
     snapshot.appendItems([task])
     dataSource.apply(snapshot)
   }
