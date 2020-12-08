@@ -4,16 +4,25 @@ import Foundation
 
 private let _UIViewController: AnyClass? = NSClassFromString("UIViewController")
 private var _isHookedKey = UInt8(0)
+private var _shouldPostKey = UInt8(0)
 
 private typealias ViewDidLoadBlock = @convention(block) (Any) -> Void
 private typealias ViewDidLoadFunction = @convention(c) (Any, Selector) -> Void
 
 func combinevm_isHooked(_ object: Any) -> Bool {
-  objc_getAssociatedObject(object, &_isHookedKey) as? Bool == true
+  objc_getAssociatedObject(object, &_isHookedKey) as? Bool ?? false
 }
 
 private func combinevm_setIsHooked(_ object: Any, _ isHooked: Bool) {
   objc_setAssociatedObject(object, &_isHookedKey, isHooked, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+}
+
+private func combinevm_shouldPost(_ object: Any) -> Bool {
+  objc_getAssociatedObject(object, &_shouldPostKey) as? Bool ?? true
+}
+
+private func combinevm_setShouldPost(_ object: Any, _ shouldPost: Bool) {
+  objc_setAssociatedObject(object, &_shouldPostKey, shouldPost, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
 }
 
 #if canImport(UIKit) && !os(watchOS)
@@ -33,9 +42,19 @@ extension UIViewController {
     (method, `class`) = object_getInstanceMethod(self, name: selector)!
 
     let block: ViewDidLoadBlock = { `self` in
+      let shouldPost = combinevm_shouldPost(self)
       let viewDidLoad = unsafeBitCast(originalIMP!, to: ViewDidLoadFunction.self)
+
+      if shouldPost {
+        combinevm_setShouldPost(self, false)
+      }
+
       viewDidLoad(self, selector)
-      NotificationCenter.default.post(name: UIViewController.viewDidLoadNotification, object: self)
+
+      if shouldPost {
+        combinevm_setShouldPost(self, true)
+        NotificationCenter.default.post(name: UIViewController.viewDidLoadNotification, object: self)
+      }
     }
 
     originalIMP = method_setImplementation(method, imp_implementationWithBlock(block))
