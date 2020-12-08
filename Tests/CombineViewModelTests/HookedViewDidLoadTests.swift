@@ -40,5 +40,30 @@ final class HookedViewDidLoadTests: XCTestCase {
 
     XCTAssertEqual(controller.viewDidLoadSelector, #selector(UIViewController.viewDidLoad))
   }
+
+  func testRecursiveViewDidLoad() {
+    class ViewModelObserver: UIViewController {
+      override func viewDidLoad() {
+        super.viewDidLoad()
+      }
+    }
+
+    class Unrelated: UIViewController {}
+
+    let observer = ViewModelObserver()
+    observer.hookViewDidLoad()
+    Unrelated().hookViewDidLoad()
+
+    var notificationCount = 0
+
+    let token = NotificationCenter.default.addObserver(forName: UIViewController.viewDidLoadNotification, object: observer, queue: nil) { _ in
+      notificationCount += 1
+    }
+    defer { NotificationCenter.default.removeObserver(token) }
+
+    _ = observer.view
+
+    XCTAssertEqual(notificationCount, 1, "Expected recursively-hooked viewDidLoad() to fire only a single notification.")
+  }
 }
 #endif
